@@ -10,15 +10,15 @@ It demonstrates Page Object Model, reusable components, external test data, expl
 
 ## Coverage
 
-Implemented scenarios cover successful form authentication, invalid credentials, and adding/removing dynamic elements. Additional starter exercises are in `test/advanced.practice.spec.js`:
+The suite currently covers:
 
-- Checkbox state management
-- Native dropdown selection
-- Dynamic controls and asynchronous UI state changes
-- JavaScript alerts and confirmations
-- File upload
-
-The advanced scenarios are deliberately marked `it.skip`; implement them in the existing Page Objects and components.
+- Successful and invalid login.
+- Adding and removing dynamic elements.
+- Checkbox state management.
+- Native dropdown selection.
+- Dynamic controls and asynchronous UI state changes.
+- JavaScript alerts, confirmations, and prompts.
+- File upload.
 
 ## Architecture
 
@@ -26,7 +26,9 @@ The advanced scenarios are deliberately marked `it.skip`; implement them in the 
 data/                       # Credentials and test data
 po/components/              # Reusable UI components and selectors
 po/pages/                   # Page-level actions and composition
-test/                       # Mocha specifications
+test/fixtures/              # Files used by upload tests
+test/specs/authentication/  # Authentication E2E specifications
+test/specs/elements/        # Element-interaction E2E specifications
 artifacts/                  # Generated screenshots and Allure files
 wdio.conf.js                # WebdriverIO runner configuration
 .eslintrc.json              # JavaScript quality rules
@@ -52,9 +54,8 @@ npm test
 Focused suites:
 
 ```powershell
-npm run test:login
+npm run test:auth
 npm run test:elements
-npm run test:advanced
 ```
 
 ## Code quality
@@ -103,4 +104,4 @@ This suite targets a third-party public demo application for educational use. It
 
 ## Next steps
 
-Implement the remaining advanced exercises, introduce smoke/regression tags, and add an example Allure report screenshot after the full suite is complete.
+Introduce smoke/regression tags, improve Page Object encapsulation, and add an example Allure report screenshot after a successful CI run.
