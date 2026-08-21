@@ -7,8 +7,16 @@ class CheckboxesPage extends BasePage {
     this.checkboxes = new Checkboxes(); 
   }
 
+  get items() {
+    return this.checkboxes.items;
+  }
+
   async selectCheckbox(index) {
-    await this.checkboxes.items[index].click();
+    const checkbox = this.items[index];
+
+    if (!(await checkbox.isSelected())) {
+      await checkbox.click();
+    }
   }
 }
 

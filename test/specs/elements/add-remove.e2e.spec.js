@@ -10,18 +10,18 @@ describe('Dynamic elements', () => {
   it('adds three elements and removes one', async () => {
     await adderPage.open();
 
-    await expect(adderPage.adder.addButton).toBeDisplayed();
+    await expect(adderPage.addButton).toBeDisplayed();
 
     await adderPage.add();
     await adderPage.add();
     await adderPage.add();
 
-    await expect(adderPage.adder.deleteButtons)
+    await expect(adderPage.deleteButtons)
       .toBeElementsArrayOfSize(3);
 
     await adderPage.deleteOne();
 
-    await expect(adderPage.adder.deleteButtons)
+    await expect(adderPage.deleteButtons)
       .toBeElementsArrayOfSize(2);
   });
 });

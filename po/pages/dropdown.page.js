@@ -7,8 +7,12 @@ class DropdownPage extends BasePage {
     this.dropdown = new Dropdown();
   }
 
-  async selectOptionByIndex(index) {
-    await this.dropdown.select.selectByIndex(index);
+  get selectElement() {
+    return this.dropdown.select;
+  }
+
+  async selectOption(optionText) {
+    await this.selectElement.selectByVisibleText(optionText);
   }
 }
 

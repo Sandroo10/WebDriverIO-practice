@@ -11,6 +11,14 @@ class AdderPage extends BasePage {
     await this.adder.addButton.click();
   }
 
+  get addButton() {
+    return this.adder.addButton;
+  }
+
+  get deleteButtons() {
+    return this.adder.deleteButtons;
+  }
+
   async deleteOne() {
     await this.adder.deleteButtons[0].click();
   }

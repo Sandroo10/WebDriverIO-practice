@@ -7,11 +7,19 @@ class DynamicControlsPage extends BasePage {
     this.controls = new DynamicControls(); 
   }
 
-  async pressRemoveButton() {
+  get checkbox() {
+    return this.controls.checkbox;
+  }
+
+  get statusMessage() {
+    return this.controls.message;
+  }
+
+  async removeCheckbox() {
     await this.controls.removeButton.click();
   }
 
-  async pressAddButton() {
+  async restoreCheckbox() {
     await this.controls.addButton.click();
   }
 }

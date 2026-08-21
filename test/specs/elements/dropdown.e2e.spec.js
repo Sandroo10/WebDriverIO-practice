@@ -6,8 +6,8 @@ describe('Dropdown', () => {
   it('selects Option 2', async () => {
     await dropdownPage.open();
 
-    await dropdownPage.selectOptionByIndex(2);
+    await dropdownPage.selectOption('Option 2');
 
-    await expect(dropdownPage.dropdown.options[2]).toBeSelected();
+    await expect(dropdownPage.selectElement).toHaveValue('2');
   });
 });

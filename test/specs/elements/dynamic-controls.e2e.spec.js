@@ -6,18 +6,18 @@ describe('Dynamic controls', () => {
   it('removes and restores an asynchronous checkbox', async () => {
     await dynamicControlsPage.open();
 
-    await dynamicControlsPage.pressRemoveButton();
+    await dynamicControlsPage.removeCheckbox();
 
-    await expect(dynamicControlsPage.controls.message)
+    await expect(dynamicControlsPage.statusMessage)
       .toHaveText("It's gone!");
-    await expect(dynamicControlsPage.controls.checkbox)
+    await expect(dynamicControlsPage.checkbox)
       .not.toBeDisplayed();
 
-    await dynamicControlsPage.pressAddButton();
+    await dynamicControlsPage.restoreCheckbox();
 
-    await expect(dynamicControlsPage.controls.message)
+    await expect(dynamicControlsPage.statusMessage)
       .toHaveText("It's back!");
-    await expect(dynamicControlsPage.controls.checkbox)
+    await expect(dynamicControlsPage.checkbox)
       .toBeDisplayed();
   });
 });
