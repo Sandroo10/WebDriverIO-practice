@@ -1,20 +1,20 @@
 const BaseComponent = require('../common/base.component');
 
 class DynamicControls extends BaseComponent {
-  constructor() { 
-    super('#content'); 
+  constructor() {
+    super('#content');
   }
   get checkbox() {
     return this.root.$('#checkbox');
   }
-  get removeButton() { 
-    return this.root.$('button=Remove'); 
+  get removeButton() {
+    return this.root.$('button=Remove');
   }
-  get addButton() { 
+  get addButton() {
     return this.root.$('button=Add');
   }
-  get message() { 
-    return this.root.$('#message'); 
+  get message() {
+    return this.root.$('#message');
   }
 }
 

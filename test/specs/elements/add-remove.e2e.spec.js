@@ -7,7 +7,7 @@ describe('Dynamic elements', () => {
     await adderPage.deleteRest();
   });
 
-  it('adds three elements and removes one', async () => {
+  it('adds three elements and removes one @smoke', async () => {
     await adderPage.open();
 
     await expect(adderPage.addButton).toBeDisplayed();
@@ -16,12 +16,10 @@ describe('Dynamic elements', () => {
     await adderPage.add();
     await adderPage.add();
 
-    await expect(adderPage.deleteButtons)
-      .toBeElementsArrayOfSize(3);
+    await expect(adderPage.deleteButtons).toBeElementsArrayOfSize(3);
 
     await adderPage.deleteOne();
 
-    await expect(adderPage.deleteButtons)
-      .toBeElementsArrayOfSize(2);
+    await expect(adderPage.deleteButtons).toBeElementsArrayOfSize(2);
   });
 });

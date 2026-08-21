@@ -11,16 +11,13 @@ describe('JavaScript dialogs', () => {
 
     try {
       await alertsPage.clickAlertButton();
-      await expect(alertsPage.alerts.result)
-        .toHaveText('You successfully clicked an alert');
+      await expect(alertsPage.alerts.result).toHaveText('You successfully clicked an alert');
 
       await alertsPage.clickConfirmButton();
-      await expect(alertsPage.alerts.result)
-        .toHaveText('You clicked: Ok');
+      await expect(alertsPage.alerts.result).toHaveText('You clicked: Ok');
 
       await alertsPage.clickPromptButton();
-      await expect(alertsPage.alerts.result)
-        .toHaveText(`You entered: ${text}`);
+      await expect(alertsPage.alerts.result).toHaveText(`You entered: ${text}`);
     } finally {
       alertsPage.stopAcceptingDialogs();
     }

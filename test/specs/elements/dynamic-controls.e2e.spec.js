@@ -8,16 +8,12 @@ describe('Dynamic controls', () => {
 
     await dynamicControlsPage.removeCheckbox();
 
-    await expect(dynamicControlsPage.statusMessage)
-      .toHaveText("It's gone!");
-    await expect(dynamicControlsPage.checkbox)
-      .not.toBeDisplayed();
+    await expect(dynamicControlsPage.statusMessage).toHaveText("It's gone!");
+    await expect(dynamicControlsPage.checkbox).not.toBeDisplayed();
 
     await dynamicControlsPage.restoreCheckbox();
 
-    await expect(dynamicControlsPage.statusMessage)
-      .toHaveText("It's back!");
-    await expect(dynamicControlsPage.checkbox)
-      .toBeDisplayed();
+    await expect(dynamicControlsPage.statusMessage).toHaveText("It's back!");
+    await expect(dynamicControlsPage.checkbox).toBeDisplayed();
   });
 });

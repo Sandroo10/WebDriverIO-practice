@@ -19,5 +19,5 @@ module.exports = {
   Dropdown,
   DynamicControls,
   Alerts,
-  Upload
+  Upload,
 };

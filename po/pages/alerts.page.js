@@ -2,9 +2,9 @@ const BasePage = require('./base.page');
 const { Alerts } = require('../components');
 
 class AlertsPage extends BasePage {
-  constructor() { 
-    super('/javascript_alerts'); 
-    this.alerts = new Alerts(); 
+  constructor() {
+    super('/javascript_alerts');
+    this.alerts = new Alerts();
   }
 
   async clickAlertButton() {
@@ -20,13 +20,22 @@ class AlertsPage extends BasePage {
   }
 
   startAcceptingDialogs(promptText) {
-    browser.on('dialog', async (dialog) => {
+    this.stopAcceptingDialogs();
+
+    this.dialogHandler = async (dialog) => {
       await dialog.accept(dialog.type() === 'prompt' ? promptText : undefined);
-    });
+    };
+
+    browser.on('dialog', this.dialogHandler);
   }
 
   stopAcceptingDialogs() {
-    browser.removeAllListeners('dialog');
+    if (!this.dialogHandler) {
+      return;
+    }
+
+    browser.off('dialog', this.dialogHandler);
+    this.dialogHandler = undefined;
   }
 }
 

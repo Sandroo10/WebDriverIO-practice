@@ -1,23 +1,23 @@
 const BaseComponent = require('../common/base.component');
 
 class Alerts extends BaseComponent {
-  constructor() { 
-    super('#content'); 
+  constructor() {
+    super('#content');
   }
-  get alertButton() { 
-    return this.root.$('[onclick="jsAlert()"]'); 
-  }
-
-  get confirmButton() { 
-    return this.root.$('[onclick="jsConfirm()"]'); 
+  get alertButton() {
+    return this.root.$('[onclick="jsAlert()"]');
   }
 
-  get promptButton() { 
-    return this.root.$('[onclick="jsPrompt()"]'); 
+  get confirmButton() {
+    return this.root.$('[onclick="jsConfirm()"]');
   }
 
-  get result() { 
-    return this.root.$('#result'); 
+  get promptButton() {
+    return this.root.$('[onclick="jsPrompt()"]');
+  }
+
+  get result() {
+    return this.root.$('#result');
   }
 }
 

@@ -6,7 +6,7 @@
 
 This repository is a maintainable WebdriverIO/Mocha automation framework built for practicing UI automation against [The Internet](https://the-internet.herokuapp.com/), a public demo application designed for automated-testing exercises.
 
-It demonstrates Page Object Model, reusable components, external test data, explicit waits, failure screenshots, Allure reporting, and linting. The application is intentionally small; the framework design is the main learning objective.
+It demonstrates Page Object Model, reusable components, external test data, explicit waits, failure screenshots, Allure reporting, linting, and consistent formatting. The application is intentionally small; the framework design is the main learning objective.
 
 ## Coverage
 
@@ -31,7 +31,8 @@ test/specs/authentication/  # Authentication E2E specifications
 test/specs/elements/        # Element-interaction E2E specifications
 artifacts/                  # Generated screenshots and Allure files
 wdio.conf.js                # WebdriverIO runner configuration
-.eslintrc.json              # JavaScript quality rules
+eslint.config.js            # ESLint flat configuration
+.prettierrc.json            # Formatting rules
 ```
 
 Tests describe user behaviour. Page Objects expose actions such as `login()` and `deleteRest()`. Components own selectors and scoped element access, keeping specifications readable and reducing maintenance when the UI changes.
@@ -56,16 +57,22 @@ Focused suites:
 ```powershell
 npm run test:auth
 npm run test:elements
+npm run test:smoke
 ```
+
+The smoke suite contains the valid-login, add/remove-elements, and file-upload journeys. It uses `@smoke` labels in test names; all tests remain part of the full suite run by `npm test`.
 
 ## Code quality
 
 ```powershell
 npm run lint
 npm run lint:fix
+npm run format:check
+npm run format
+npm run check
 ```
 
-The ESLint configuration recognises WebdriverIO globals (`browser`, `$`, `$$`, and `expect`) while detecting undefined and unused variables.
+ESLint 10 uses its current flat configuration format and recognises WebdriverIO globals (`browser`, `$`, `$$`, and `expect`) while detecting undefined and unused variables. Prettier applies one consistent code style. `npm run check` runs linting followed by the complete E2E suite.
 
 ## Reporting and diagnostics
 
@@ -81,13 +88,13 @@ Reports are generated under `artifacts/allure-report`. Failed tests also produce
 
 ## Continuous integration
 
-The GitHub Actions workflow performs a clean dependency installation, runs ESLint, executes Chrome in headless mode, and uploads screenshots and Allure results as build artifacts. It runs:
+The GitHub Actions workflow performs a clean dependency installation, checks formatting and linting, executes the E2E suite, generates an Allure HTML report, and uploads Allure results, the HTML report, and failure screenshots as build artifacts. It runs:
 
-- On pushes and pull requests targeting `main`.
-- Every Monday at 06:00 UTC.
+- In Chrome on pushes and pull requests targeting `main` or `master`, running the smoke suite.
+- In Chrome and Firefox every Monday at 06:00 UTC (Full Suite).
 - Manually through GitHub's **Run workflow** action.
 
-The workflow keeps one browser instance and has a 15-minute timeout to avoid placing unnecessary load on the public demo application. CI artifacts are retained for 14 days.
+The workflow keeps one browser instance and has a 15-minute timeout to avoid placing unnecessary load on the public demo application. CI artifacts are retained for 14 days. Dependabot checks npm dependencies and GitHub Actions versions weekly.
 
 ## Test design principles
 
@@ -101,7 +108,3 @@ The workflow keeps one browser instance and has a 15-minute timeout to avoid pla
 ## Public application notice
 
 This suite targets a third-party public demo application for educational use. It intentionally runs a small, sequential set of tests and does not stress or modify the service beyond normal browser interactions. It is a framework demonstration, not a production-system test suite.
-
-## Next steps
-
-Introduce smoke/regression tags, improve Page Object encapsulation, and add an example Allure report screenshot after a successful CI run.

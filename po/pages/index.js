@@ -15,7 +15,7 @@ const pageInstances = {
   dropdown: new DropdownPage(),
   dynamiccontrols: new DynamicControlsPage(),
   alerts: new AlertsPage(),
-  upload: new UploadPage()
+  upload: new UploadPage(),
 };
 
 function pages(name) {
@@ -37,5 +37,5 @@ module.exports = {
   DynamicControlsPage,
   AlertsPage,
   UploadPage,
-  pages
+  pages,
 };

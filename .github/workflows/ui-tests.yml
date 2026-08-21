@@ -18,9 +18,13 @@ permissions:
 
 jobs:
   test:
-    name: Lint and UI tests
+    name: ${{ matrix.browser }} UI tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: ${{ github.event_name == 'schedule' && fromJSON('["chrome", "firefox"]') || fromJSON('["chrome"]') }}
 
     steps:
       - name: Check out repository
@@ -35,20 +39,31 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run ESLint
-        run: npm run lint
+      - name: Check formatting and lint
+        run: |
+          npm run format:check
+          npm run lint
 
       - name: Run WebdriverIO tests
         run: npm test
         env:
           CI: 'true'
           BASE_URL: https://the-internet.herokuapp.com
+          BROWSER: ${{ matrix.browser }}
+          TEST_GREP: ${{ (github.event_name == 'push' || github.event_name == 'pull_request') && '@smoke' || '' }}
+
+      - name: Generate Allure report
+        if: always()
+        run: npm run allure:generate
 
       - name: Upload test artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: webdriverio-test-artifacts
-          path: artifacts/
+          name: webdriverio-test-artifacts-${{ matrix.browser }}
+          path: |
+            artifacts/allure-results
+            artifacts/allure-report
+            artifacts/screenshots
           if-no-files-found: ignore
           retention-days: 14

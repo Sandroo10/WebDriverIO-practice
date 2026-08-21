@@ -2,9 +2,9 @@ const BasePage = require('./base.page');
 const { Checkboxes } = require('../components');
 
 class CheckboxesPage extends BasePage {
-  constructor() { 
-    super('/checkboxes'); 
-    this.checkboxes = new Checkboxes(); 
+  constructor() {
+    super('/checkboxes');
+    this.checkboxes = new Checkboxes();
   }
 
   get items() {
@@ -12,7 +12,8 @@ class CheckboxesPage extends BasePage {
   }
 
   async selectCheckbox(index) {
-    const checkbox = this.items[index];
+    const checkboxes = await this.items;
+    const checkbox = checkboxes[index];
 
     if (!(await checkbox.isSelected())) {
       await checkbox.click();
@@ -20,8 +21,12 @@ class CheckboxesPage extends BasePage {
   }
 
   async selectAllCheckboxes() {
-    for (let index = 0; index < this.items.length; index++) {
-      await this.selectCheckbox(index);
+    const checkboxes = await this.items;
+
+    for (const checkbox of checkboxes) {
+      if (!(await checkbox.isSelected())) {
+        await checkbox.click();
+      }
     }
   }
 }

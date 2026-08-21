@@ -6,20 +6,27 @@
   "type": "commonjs",
   "scripts": {
     "test": "wdio run ./wdio.conf.js",
+    "test:smoke": "wdio run ./wdio.conf.js --mochaOpts.grep @smoke",
     "test:auth": "wdio run ./wdio.conf.js --spec ./test/specs/authentication/**/*.e2e.spec.js",
     "test:elements": "wdio run ./wdio.conf.js --spec ./test/specs/elements/**/*.e2e.spec.js",
+    "check": "npm run lint && npm test",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
     "allure:generate": "allure generate artifacts/allure-results --clean -o artifacts/allure-report",
     "allure:open": "allure open artifacts/allure-report"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@wdio/allure-reporter": "^9.31.2",
     "@wdio/cli": "^9.30.0",
     "@wdio/local-runner": "^9.30.0",
     "@wdio/mocha-framework": "^9.30.0",
     "@wdio/spec-reporter": "^9.29.1",
     "allure-commandline": "^2.43.0",
-    "eslint": "^8.57.1"
+    "eslint": "^10.9.0",
+    "globals": "^17.11.0",
+    "prettier": "^3.9.6"
   }
 }

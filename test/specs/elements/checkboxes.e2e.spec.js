@@ -6,11 +6,14 @@ describe('Checkboxes', () => {
   it('selects all available checkboxes', async () => {
     await checkboxesPage.open();
 
-    await expect(checkboxesPage.items).toBeElementsArrayOfSize(2);
+    const initialCheckboxes = await checkboxesPage.items;
+    await expect(initialCheckboxes).toBeElementsArrayOfSize(2);
 
     await checkboxesPage.selectAllCheckboxes();
 
-    for (const checkbox of checkboxesPage.items) {
+    const selectedCheckboxes = await checkboxesPage.items;
+
+    for (const checkbox of selectedCheckboxes) {
       await expect(checkbox).toBeSelected();
     }
   });

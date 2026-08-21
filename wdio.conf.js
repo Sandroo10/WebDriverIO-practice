@@ -1,22 +1,38 @@
 const { existsSync, mkdirSync } = require('fs');
 
+const browserName = process.env.BROWSER || 'chrome';
 const chromeArguments = ['--window-size=1440,900'];
 
 if (process.env.CI) {
   chromeArguments.push('--headless=new', '--no-sandbox', '--disable-dev-shm-usage');
 }
 
+const capabilities =
+  browserName === 'firefox'
+    ? [
+        {
+          browserName: 'firefox',
+          webSocketUrl: true,
+          'moz:firefoxOptions': {
+            args: process.env.CI ? ['-headless'] : [],
+          },
+        },
+      ]
+    : [
+        {
+          browserName: 'chrome',
+          webSocketUrl: true,
+          'goog:chromeOptions': {
+            args: chromeArguments,
+          },
+        },
+      ];
+
 exports.config = {
   runner: 'local',
   specs: ['./test/**/*.spec.js'],
   maxInstances: 1,
-  capabilities: [{
-    browserName: 'chrome',
-    webSocketUrl: true,
-    'goog:chromeOptions': {
-      args: chromeArguments,
-    },
-  }],
+  capabilities,
   logLevel: 'warn',
   baseUrl: process.env.BASE_URL || 'https://the-internet.herokuapp.com',
   waitforTimeout: 10000,
@@ -25,15 +41,19 @@ exports.config = {
   framework: 'mocha',
   reporters: [
     'spec',
-    ['allure', {
-      outputDir: 'artifacts/allure-results',
-      disableWebdriverStepsReporting: true,
-      disableWebdriverScreenshotsReporting: false,
-    }],
+    [
+      'allure',
+      {
+        outputDir: 'artifacts/allure-results',
+        disableWebdriverStepsReporting: true,
+        disableWebdriverScreenshotsReporting: false,
+      },
+    ],
   ],
   mochaOpts: {
     ui: 'bdd',
     timeout: 60000,
+    grep: process.env.TEST_GREP || undefined,
   },
   afterTest: async function (test, context, { error }) {
     if (!error) {
