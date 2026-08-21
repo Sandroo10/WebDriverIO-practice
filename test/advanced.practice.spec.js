@@ -4,6 +4,7 @@ const checkboxesPage = pages('checkboxes');
 const dropdownPage = pages('dropdown');
 const dynamicControlsPage = pages('dynamicControls');
 const alertsPage = pages('alerts');
+const uploadPage = pages('upload');
 
 
 describe('The Internet — advanced practice tasks', () => {
@@ -65,7 +66,10 @@ describe('The Internet — advanced practice tasks', () => {
     }
   });
 
-  it.skip('Task 8: uploads a file', async () => {
-    // TODO: create/use a fixture file, upload it, and verify the displayed filename.
+  it('Task 8: uploads a file', async () => {
+    await uploadPage.open();
+
+    await uploadPage.uploadFile('test/fixtures/upload-sample.txt');
+    await expect(uploadPage.upload.uploadedFileName).toHaveText('upload-sample.txt');
   });
 });
