@@ -3,6 +3,7 @@ const { pages } = require('../po');
 const checkboxesPage = pages('checkboxes');
 const dropdownPage = pages('dropdown');
 const dynamicControlsPage = pages('dynamicControls');
+const alertsPage = pages('alerts');
 
 
 describe('The Internet — advanced practice tasks', () => {
@@ -42,8 +43,28 @@ describe('The Internet — advanced practice tasks', () => {
     await expect(dynamicControlsPage.controls.checkbox).toBeDisplayed();
   });
 
-  it.skip('Task 7: handles JavaScript alerts and confirms', async () => {
-    // TODO: accept an alert and dismiss a confirmation; verify #result each time.
+  it('Task 7: handles JavaScript alerts and confirms', async () => {
+    const text = 'I just entered text';
+    await alertsPage.open();
+
+    // Normal alert
+    const alertHandled = alertsPage.acceptNextDialog();
+    await alertsPage.clickAlertButton();
+    const alertText = await alertHandled;
+    await expect(alertText).toBe('I am a JS Alert');
+    await expect(alertsPage.alerts.result).toHaveText('You successfully clicked an alert');
+    // Confirm alert
+    const confirmHandled = alertsPage.acceptNextDialog();
+    await alertsPage.clickConfirmButton();
+    const confirmText = await confirmHandled;
+    await expect(confirmText).toBe('I am a JS Confirm');
+    await expect(alertsPage.alerts.result).toHaveText('You clicked: Ok');
+    // Prompt alert
+    const promptHandled = alertsPage.acceptNextDialog(text);
+    await alertsPage.clickPromptButton();
+    const promptText = await promptHandled;
+    await expect(promptText).toBe('I am a JS prompt');
+    await expect(alertsPage.alerts.result).toHaveText(text);
   });
 
   it.skip('Task 8: uploads a file', async () => {
