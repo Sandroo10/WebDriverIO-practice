@@ -1,6 +1,24 @@
+const { pages } = require('../po');
+
+const checkboxesPage = pages('checkboxes');
+
+
 describe('The Internet — advanced practice tasks', () => {
-  it.skip('Task 4: selects and verifies checkboxes', async () => {
-    // TODO: open pages('checkboxes'), select both checkboxes, and verify state.
+  it('Task 4: selects and verifies checkboxes', async () => {
+    await checkboxesPage.open();
+    const checkboxes = await checkboxesPage.checkboxes.items;
+    await expect(checkboxes)
+      .toBeElementsArrayOfSize(2);
+
+    for (let i = 0; i < checkboxes.length; i++) {
+      if (!(await checkboxes[i].isSelected())) {
+        await checkboxesPage.selectCheckbox(i);
+      }
+    }
+
+    for (const checkbox of checkboxes) {
+      await expect(checkbox).toBeSelected();
+    }
   });
 
   it.skip('Task 5: selects an option from the dropdown', async () => {

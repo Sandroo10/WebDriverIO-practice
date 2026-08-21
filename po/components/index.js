@@ -1,5 +1,5 @@
 const LoginForm = require('./login/loginform.component');
-const SecureFlash = require('./secure/Secureflash.component');
+const SecureFlash = require('./secure/secureflash.component');
 const SecureRow = require('./secure/secureRow.component');
 const LoginError = require('./login/loginerror.component');
 const Adder = require('./adder/adder.component');

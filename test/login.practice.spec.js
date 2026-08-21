@@ -12,7 +12,7 @@ describe('The Internet — login practice', () => {
     
     await expect(browser).toHaveUrl(expect.stringContaining('/secure'));
     await expect(securePage.row.heading).toHaveText('Secure Area');
-    await expect(securePage.flash.root).toHaveTextContaining('You logged into a secure area!');
+    await expect(securePage.flash.root).toHaveText('You logged into a secure area!', {containing: true});
   });
 
   it('Task 2: shows an error for an invalid username', async () => {
@@ -21,6 +21,6 @@ describe('The Internet — login practice', () => {
 
     await expect(loginPage.error.root).toBeDisplayed();
     await expect(browser).toHaveUrl(expect.stringContaining('/login'));
-    await expect(loginPage.error.root).toHaveTextContaining('Your username is invalid!');
+    await expect(loginPage.error.root).toHaveText('Your username is invalid!', {containing: true});
   });
 });

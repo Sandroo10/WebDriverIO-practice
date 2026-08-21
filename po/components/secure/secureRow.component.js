@@ -1,13 +1,12 @@
 const BaseComponent = require('../common/base.component');
 
-class LoginFlash extends BaseComponent {
-    constructor() {
-        super('//div[@class="row"]');
-    }
+class SecureRow extends BaseComponent {
+  constructor() {
+    super('#content');
+  }
 
-    get heading () {
-        return this.root.$('.//h2[normalize-space() = "Secure Area"]');
-    }
+  get heading() {
+    return this.root.$('h2');
+  }
 }
-
-module.exports = LoginFlash;
+module.exports = SecureRow;
