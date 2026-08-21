@@ -2,6 +2,7 @@ const { pages } = require('../po');
 
 const checkboxesPage = pages('checkboxes');
 const dropdownPage = pages('dropdown');
+const dynamicControlsPage = pages('dynamicControls');
 
 
 describe('The Internet — advanced practice tasks', () => {
@@ -29,8 +30,16 @@ describe('The Internet — advanced practice tasks', () => {
     await expect(dropdownPage.dropdown.options[2]).toBeSelected();
   });
 
-  it.skip('Task 6: handles dynamic controls', async () => {
-    // TODO: remove the checkbox, wait for it to disappear, then add it again.
+  it('Task 6: handles dynamic controls', async () => {
+    await dynamicControlsPage.open();
+
+    await dynamicControlsPage.pressRemoveButton();
+    await expect(dynamicControlsPage.controls.message).toHaveText('It\'s gone!');
+    await expect(dynamicControlsPage.controls.checkbox).not.toBeDisplayed();
+    
+    await dynamicControlsPage.pressAddButton();
+    await expect(dynamicControlsPage.controls.message).toHaveText('It\'s back!');
+    await expect(dynamicControlsPage.controls.checkbox).toBeDisplayed();
   });
 
   it.skip('Task 7: handles JavaScript alerts and confirms', async () => {
