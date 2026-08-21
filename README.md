@@ -1,82 +1,109 @@
-# WebdriverIO UI Automation Practice
+# WebdriverIO UI Automation Framework
 
-[![Weekly WebdriverIO Tests](https://github.com/Sandroo10/WebDriverIO-practice/actions/workflows/ui-tests.yml/badge.svg)](https://github.com/Sandroo10/WebDriverIO-practice/actions/workflows/ui-tests.yml)
+[![WebdriverIO Tests](https://github.com/Sandroo10/WebDriverIO-practice/actions/workflows/ui-tests.yml/badge.svg)](https://github.com/Sandroo10/WebDriverIO-practice/actions/workflows/ui-tests.yml)
 
-## Overview
+An end-to-end UI automation framework built with WebdriverIO and Mocha. It exercises representative user journeys on [The Internet](https://the-internet.herokuapp.com/), a public application created for automation practice.
 
-This repository is a maintainable WebdriverIO/Mocha automation framework built for practicing UI automation against [The Internet](https://the-internet.herokuapp.com/), a public demo application designed for automated-testing exercises.
+The project focuses on maintainable test design: Page Objects, reusable components, behaviour-focused specifications, smoke and full-suite execution, reporting, and continuous integration.
 
-It demonstrates Page Object Model, reusable components, external test data, explicit waits, failure screenshots, Allure reporting, linting, and consistent formatting. The application is intentionally small; the framework design is the main learning objective.
+## What this project demonstrates
 
-## Coverage
+- End-to-end browser testing with WebdriverIO and Mocha.
+- Page Object Model (POM) with composition-based reusable components.
+- Behaviour-focused specifications organised by feature.
+- Positive and negative authentication coverage.
+- Dynamic DOM interactions, native controls, browser dialogs, and file upload.
+- State-based assertions and WebdriverIO waits instead of fixed delays.
+- Smoke-test selection using `@smoke` tags.
+- Allure results, HTML reports, and screenshots on test failure.
+- ESLint 10 flat configuration, Prettier formatting, and EditorConfig consistency.
+- GitHub Actions CI and Dependabot dependency updates.
 
-The suite currently covers:
+## Test coverage
 
-- Successful and invalid login.
-- Adding and removing dynamic elements.
-- Checkbox state management.
-- Native dropdown selection.
-- Dynamic controls and asynchronous UI state changes.
-- JavaScript alerts, confirmations, and prompts.
-- File upload.
+| Area               | Scenarios                                                |
+| ------------------ | -------------------------------------------------------- |
+| Authentication     | Valid login; invalid-login error handling                |
+| Dynamic elements   | Add multiple elements; remove an element; clean up state |
+| Form controls      | Select all checkboxes; select a dropdown option          |
+| Dynamic controls   | Remove and restore asynchronously changing elements      |
+| JavaScript dialogs | Alert, confirmation, and prompt acceptance               |
+| File upload        | Upload and verify a local text fixture                   |
 
-## Architecture
+The smoke suite contains the valid login, add/remove elements, and file-upload journeys. All scenarios are included in the full regression suite.
+
+## Framework architecture
 
 ```text
-data/                       # Credentials and test data
-po/components/              # Reusable UI components and selectors
-po/pages/                   # Page-level actions and composition
-test/fixtures/              # Files used by upload tests
-test/specs/authentication/  # Authentication E2E specifications
-test/specs/elements/        # Element-interaction E2E specifications
-artifacts/                  # Generated screenshots and Allure files
-wdio.conf.js                # WebdriverIO runner configuration
-eslint.config.js            # ESLint flat configuration
-.prettierrc.json            # Formatting rules
+├── data/                         # External credentials and test data
+├── po/
+│   ├── components/               # Reusable, scoped UI components and selectors
+│   └── pages/                    # Page actions and component composition
+├── test/
+│   ├── fixtures/                 # Upload files used by tests
+│   └── specs/
+│       ├── authentication/       # Authentication E2E tests
+│       └── elements/             # UI interaction E2E tests
+├── .github/
+│   ├── workflows/                # GitHub Actions CI workflow
+│   └── dependabot.yml            # Automated dependency-update configuration
+├── artifacts/                    # Generated reports and screenshots (Git-ignored)
+├── eslint.config.js              # ESLint flat configuration
+├── wdio.conf.js                  # WebdriverIO configuration
+└── package.json                  # Commands and project dependencies
 ```
 
-Tests describe user behaviour. Page Objects expose actions such as `login()` and `deleteRest()`. Components own selectors and scoped element access, keeping specifications readable and reducing maintenance when the UI changes.
+Specifications describe user behaviour. Page Objects expose meaningful operations such as `login()`, `selectOption()` and `removeCheckbox()`. Components contain selector details. This keeps tests readable and limits maintenance when page structure changes.
 
-## Requirements
+## Prerequisites
 
 - Node.js 20 or newer
 - npm
-- Google Chrome
-- Network access to `the-internet.herokuapp.com`
+- Google Chrome for local UI runs
+- Network access to `https://the-internet.herokuapp.com`
 
-## Installation and execution
+## Getting started
 
 ```powershell
-cd C:\Users\user\Desktop\Epam\webdriverio-the-internet-practice
-npm install
-npm test
+git clone https://github.com/Sandroo10/WebDriverIO-practice.git
+cd WebDriverIO-practice
+npm ci
 ```
 
-Focused suites:
+## Test commands
 
 ```powershell
+# Entire UI suite
+npm test
+
+# Fast smoke suite
+npm run test:smoke
+
+# Feature-focused suites
 npm run test:auth
 npm run test:elements
-npm run test:smoke
-```
 
-The smoke suite contains the valid-login, add/remove-elements, and file-upload journeys. It uses `@smoke` labels in test names; all tests remain part of the full suite run by `npm test`.
+# Formatting, linting, then the full suite
+npm run check
+```
 
 ## Code quality
 
 ```powershell
-npm run lint
-npm run lint:fix
+# Check without changing files
 npm run format:check
+npm run lint
+
+# Apply automatic fixes
 npm run format
-npm run check
+npm run lint:fix
 ```
 
-ESLint 10 uses its current flat configuration format and recognises WebdriverIO globals (`browser`, `$`, `$$`, and `expect`) while detecting undefined and unused variables. Prettier applies one consistent code style. `npm run check` runs linting followed by the complete E2E suite.
+ESLint detects common JavaScript issues and recognises WebdriverIO globals. Prettier and EditorConfig enforce a shared formatting baseline across the repository.
 
 ## Reporting and diagnostics
 
-Allure collects results during every test run. Generate and open its HTML report separately:
+Allure collects test results during every run. To create and view the report locally:
 
 ```powershell
 npm test
@@ -84,27 +111,37 @@ npm run allure:generate
 npm run allure:open
 ```
 
-Reports are generated under `artifacts/allure-report`. Failed tests also produce screenshots under `artifacts/screenshots`. These generated artifacts are ignored by Git.
+- Allure HTML report: `artifacts/allure-report`
+- Allure raw results: `artifacts/allure-results`
+- Failure screenshots: `artifacts/screenshots`
+
+Generated artifacts are excluded from Git and are available to download from CI runs.
 
 ## Continuous integration
 
-The GitHub Actions workflow performs a clean dependency installation, checks formatting and linting, executes the E2E suite, generates an Allure HTML report, and uploads Allure results, the HTML report, and failure screenshots as build artifacts. It runs:
+GitHub Actions provides fast feedback while keeping the public demo site load modest.
 
-- In Chrome on pushes and pull requests targeting `main` or `master`, running the smoke suite.
-- In Chrome and Firefox every Monday at 06:00 UTC (Full Suite).
-- Manually through GitHub's **Run workflow** action.
+| Trigger                                   | Browser coverage              | Test scope     |
+| ----------------------------------------- | ----------------------------- | -------------- |
+| Push or pull request to `main` / `master` | Chrome (headless)             | `@smoke` suite |
+| Weekly schedule — Monday 06:00 UTC        | Chrome and Firefox (headless) | Full suite     |
+| Manual workflow run                       | Chrome                        | Full suite     |
 
-The workflow keeps one browser instance and has a 15-minute timeout to avoid placing unnecessary load on the public demo application. CI artifacts are retained for 14 days. Dependabot checks npm dependencies and GitHub Actions versions weekly.
+Every CI run installs dependencies cleanly, checks formatting and linting, executes the selected test scope, generates an Allure report, and uploads reports and failure screenshots as build artifacts. No automatic test retries are configured: failures should be investigated rather than hidden.
 
-## Test design principles
+## Dependency maintenance
 
-- Prefer stable selectors over brittle layout-based selectors.
-- Use WebdriverIO wait assertions instead of `browser.pause()`.
-- Keep test data outside test logic.
-- Keep tests independent and repeatable.
-- Use page-level actions instead of duplicating selectors in specs.
-- Verify both user-visible outcomes and important navigation/state changes.
+Dependabot checks npm dependencies and GitHub Actions versions every week. When updates are available, it creates a dedicated branch and pull request. Review the change and CI results, then merge it only if the suite remains healthy.
 
-## Public application notice
+## Design principles
 
-This suite targets a third-party public demo application for educational use. It intentionally runs a small, sequential set of tests and does not stress or modify the service beyond normal browser interactions. It is a framework demonstration, not a production-system test suite.
+- Prefer stable, semantic selectors over layout-dependent selectors.
+- Use state-based waits and assertions; do not use fixed `browser.pause()` calls.
+- Keep tests independent and leave the application in a predictable state.
+- Separate test data, test scenarios, page actions, and selectors.
+- Assert observable user outcomes as well as relevant browser state.
+- Keep smoke tests small, stable, and fast; reserve wider coverage for regression runs.
+
+## Scope and limitations
+
+This is a learning and portfolio framework, not a test suite for a system owned by this repository. It targets a third-party public demo application and intentionally avoids destructive actions, test retries, and unnecessary parallel load. Test stability can be affected by availability or changes in the external site.
