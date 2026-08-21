@@ -1,5 +1,11 @@
 const { existsSync, mkdirSync } = require('fs');
 
+const chromeArguments = ['--window-size=1440,900'];
+
+if (process.env.CI) {
+  chromeArguments.push('--headless=new', '--no-sandbox', '--disable-dev-shm-usage');
+}
+
 exports.config = {
   runner: 'local',
   specs: ['./test/**/*.spec.js'],
@@ -7,11 +13,11 @@ exports.config = {
   capabilities: [{
     browserName: 'chrome',
     'goog:chromeOptions': {
-      args: ['--window-size=1440,900'],
+      args: chromeArguments,
     },
   }],
   logLevel: 'warn',
-  baseUrl: 'https://the-internet.herokuapp.com',
+  baseUrl: process.env.BASE_URL || 'https://the-internet.herokuapp.com',
   waitforTimeout: 10000,
   connectionRetryTimeout: 120000,
   connectionRetryCount: 2,

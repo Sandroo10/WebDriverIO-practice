@@ -1,6 +1,7 @@
 const { pages } = require('../po');
 
 const checkboxesPage = pages('checkboxes');
+const dropdownPage = pages('dropdown');
 
 
 describe('The Internet — advanced practice tasks', () => {
@@ -21,8 +22,11 @@ describe('The Internet — advanced practice tasks', () => {
     }
   });
 
-  it.skip('Task 5: selects an option from the dropdown', async () => {
-    // TODO: open pages('dropdown'), select Option 2, and verify the selected value.
+  it('Task 5: selects an option from the dropdown', async () => {
+    await dropdownPage.open();
+
+    await dropdownPage.selectOptionByIndex(2);
+    await expect(dropdownPage.dropdown.options[2]).toBeSelected();
   });
 
   it.skip('Task 6: handles dynamic controls', async () => {

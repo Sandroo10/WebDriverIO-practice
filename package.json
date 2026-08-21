@@ -8,8 +8,11 @@
     "test": "wdio run ./wdio.conf.js",
     "test:login": "wdio run ./wdio.conf.js --spec ./test/login.practice.spec.js",
     "test:elements": "wdio run ./wdio.conf.js --spec ./test/add-remove.practice.spec.js",
+    "test:advanced": "wdio run ./wdio.conf.js --spec ./test/advanced.practice.spec.js",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "allure:generate": "allure generate artifacts/allure-results --clean -o artifacts/allure-report",
+    "allure:open": "allure open artifacts/allure-report"
   },
   "devDependencies": {
     "@wdio/allure-reporter": "^9.31.2",

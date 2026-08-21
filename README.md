@@ -1,5 +1,7 @@
 # WebdriverIO UI Automation Practice
 
+[![Weekly WebdriverIO Tests](https://github.com/Sandroo10/WebDriverIO-practice/actions/workflows/ui-tests.yml/badge.svg)](https://github.com/Sandroo10/WebDriverIO-practice/actions/workflows/ui-tests.yml)
+
 ## Overview
 
 This repository is a maintainable WebdriverIO/Mocha automation framework built for practicing UI automation against [The Internet](https://the-internet.herokuapp.com/), a public demo application designed for automated-testing exercises.
@@ -52,6 +54,7 @@ Focused suites:
 ```powershell
 npm run test:login
 npm run test:elements
+npm run test:advanced
 ```
 
 ## Code quality
@@ -75,6 +78,16 @@ npm run allure:open
 
 Reports are generated under `artifacts/allure-report`. Failed tests also produce screenshots under `artifacts/screenshots`. These generated artifacts are ignored by Git.
 
+## Continuous integration
+
+The GitHub Actions workflow performs a clean dependency installation, runs ESLint, executes Chrome in headless mode, and uploads screenshots and Allure results as build artifacts. It runs:
+
+- On pushes and pull requests targeting `main`.
+- Every Monday at 06:00 UTC.
+- Manually through GitHub's **Run workflow** action.
+
+The workflow keeps one browser instance and has a 15-minute timeout to avoid placing unnecessary load on the public demo application. CI artifacts are retained for 14 days.
+
 ## Test design principles
 
 - Prefer stable selectors over brittle layout-based selectors.
@@ -90,4 +103,4 @@ This suite targets a third-party public demo application for educational use. It
 
 ## Next steps
 
-Implement the five advanced exercises, add CI execution with one Chrome worker, introduce smoke/regression scripts, and add an Allure screenshot and CI badge after publishing the repository.
+Implement the remaining advanced exercises, introduce smoke/regression tags, and add an example Allure report screenshot after the full suite is complete.
