@@ -19,20 +19,14 @@ class AlertsPage extends BasePage {
     await this.alerts.promptButton.click();
   }
 
-  acceptNextDialog(promptText) {
-    return new Promise((resolve, reject) => {
-      browser.once('dialog', async (dialog) => {
-        try {
-          const message = dialog.message();
-
-          await dialog.accept(promptText);
-
-          resolve(message);
-        } catch (error) {
-          reject(error);
-        }
-      });
+  startAcceptingDialogs(promptText) {
+    browser.on('dialog', async (dialog) => {
+      await dialog.accept(dialog.type() === 'prompt' ? promptText : undefined);
     });
+  }
+
+  stopAcceptingDialogs() {
+    browser.removeAllListeners('dialog');
   }
 }
 

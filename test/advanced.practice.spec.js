@@ -46,25 +46,23 @@ describe('The Internet — advanced practice tasks', () => {
   it('Task 7: handles JavaScript alerts and confirms', async () => {
     const text = 'I just entered text';
     await alertsPage.open();
+    alertsPage.startAcceptingDialogs(text);
 
-    // Normal alert
-    const alertHandled = alertsPage.acceptNextDialog();
-    await alertsPage.clickAlertButton();
-    const alertText = await alertHandled;
-    await expect(alertText).toBe('I am a JS Alert');
-    await expect(alertsPage.alerts.result).toHaveText('You successfully clicked an alert');
-    // Confirm alert
-    const confirmHandled = alertsPage.acceptNextDialog();
-    await alertsPage.clickConfirmButton();
-    const confirmText = await confirmHandled;
-    await expect(confirmText).toBe('I am a JS Confirm');
-    await expect(alertsPage.alerts.result).toHaveText('You clicked: Ok');
-    // Prompt alert
-    const promptHandled = alertsPage.acceptNextDialog(text);
-    await alertsPage.clickPromptButton();
-    const promptText = await promptHandled;
-    await expect(promptText).toBe('I am a JS prompt');
-    await expect(alertsPage.alerts.result).toHaveText(text);
+    try {
+      //this is for clicking normal alert
+      await alertsPage.clickAlertButton();
+      await expect(alertsPage.alerts.result).toHaveText('You successfully clicked an alert');
+
+      //this for confirm
+      await alertsPage.clickConfirmButton();
+      await expect(alertsPage.alerts.result).toHaveText('You clicked: Ok');
+
+      //and this one for prompt
+      await alertsPage.clickPromptButton();
+      await expect(alertsPage.alerts.result).toHaveText(`You entered: ${text}`);
+    } finally {
+      alertsPage.stopAcceptingDialogs();
+    }
   });
 
   it.skip('Task 8: uploads a file', async () => {

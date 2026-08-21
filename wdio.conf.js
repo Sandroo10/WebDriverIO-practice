@@ -12,6 +12,7 @@ exports.config = {
   maxInstances: 1,
   capabilities: [{
     browserName: 'chrome',
+    webSocketUrl: true,
     'goog:chromeOptions': {
       args: chromeArguments,
     },
