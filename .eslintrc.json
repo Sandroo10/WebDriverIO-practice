@@ -1,0 +1,13 @@
+{
+  "env": { "es2021": true, "node": true, "mocha": true },
+  "globals": { "browser": "readonly", "$": "readonly", "$$": "readonly", "expect": "readonly" },
+  "extends": ["eslint:recommended"],
+  "parserOptions": { "ecmaVersion": "latest" },
+  "rules": {
+    "semi": ["error", "always"],
+    "quotes": ["error", "single", { "avoidEscape": true }],
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "no-undef": "error"
+  },
+  "ignorePatterns": ["node_modules/", "artifacts/"]
+}

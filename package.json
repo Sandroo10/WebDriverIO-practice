@@ -1,0 +1,23 @@
+{
+  "name": "webdriverio-the-internet-practice",
+  "version": "1.0.0",
+  "private": true,
+  "description": "WebdriverIO practice against The Internet demo site.",
+  "type": "commonjs",
+  "scripts": {
+    "test": "wdio run ./wdio.conf.js",
+    "test:login": "wdio run ./wdio.conf.js --spec ./test/login.practice.spec.js",
+    "test:elements": "wdio run ./wdio.conf.js --spec ./test/add-remove.practice.spec.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@wdio/allure-reporter": "^9.31.2",
+    "@wdio/cli": "^9.30.0",
+    "@wdio/local-runner": "^9.30.0",
+    "@wdio/mocha-framework": "^9.30.0",
+    "@wdio/spec-reporter": "^9.29.1",
+    "allure-commandline": "^2.43.0",
+    "eslint": "^8.57.1"
+  }
+}
