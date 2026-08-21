@@ -18,6 +18,12 @@ class CheckboxesPage extends BasePage {
       await checkbox.click();
     }
   }
+
+  async selectAllCheckboxes() {
+    for (let index = 0; index < this.items.length; index++) {
+      await this.selectCheckbox(index);
+    }
+  }
 }
 
 module.exports = CheckboxesPage;
