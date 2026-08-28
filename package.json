@@ -25,7 +25,7 @@
     "@wdio/mocha-framework": "^9.30.0",
     "@wdio/spec-reporter": "^9.29.1",
     "allure-commandline": "^2.43.0",
-    "eslint": "^10.9.0",
+    "eslint": "^10.9.1",
     "globals": "^17.11.0",
     "prettier": "^3.9.6"
   }
